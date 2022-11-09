@@ -4,15 +4,16 @@ import store from "../redux/store/store";
 import {HideLoader, ShowLoader} from "../redux/state-slice/settings-slice";
 import {getToken, setEmail, setOTP, setToken, setUserDetails} from "../helper/SessionHelper";
 import {SetCanceledTask, SetCompletedTask, SetNewTask, SetProgressTask} from "../redux/state-slice/task-slice";
-import {SetSummary} from "../redux/state-slice/summary-slice";
+import {SetSummary,GetAllUser} from "../redux/state-slice/summary-slice";
 import {SetProfile} from "../redux/state-slice/profile-slice";
-const BaseURL="https://mern-task-manager-rabbil.herokuapp.com/api/v1"
+// const BaseURL="https://task-manager-server-2022.herokuapp.com/api/v1/";
+const BaseURL="http://localhost:8080/api/v1";
 
 const AxiosHeader={headers:{"token":getToken()}}
-export function NewTaskRequest(title,description){
+export function NewTaskRequest(title,description,assigMember){
     store.dispatch(ShowLoader())
     let URL=BaseURL+"/createTask";
-    let PostBody={"title":title,"description":description,status:"New"}
+    let PostBody={"title":title,"description":description,"assigMember":assigMember,status:"New"}
 
     return axios.post(URL,PostBody,AxiosHeader).then((res)=>{
         store.dispatch(HideLoader())
@@ -176,6 +177,22 @@ export function GetProfileDetails(){
         store.dispatch(HideLoader())
         if(res.status===200){
             store.dispatch(SetProfile(res.data['data'][0]))
+        }
+        else{
+            ErrorToast("Something Went Wrong")
+        }
+    }).catch((err)=>{
+        ErrorToast("Something Went Wrong")
+        store.dispatch(HideLoader())
+    });
+}
+export function allUser(){
+    store.dispatch(ShowLoader())
+    let URL=BaseURL+"/allUser";
+    axios.get(URL,AxiosHeader).then((res)=>{
+        store.dispatch(HideLoader())
+        if(res.status===200){
+            store.dispatch(GetAllUser(res.data['data']))
         }
         else{
             ErrorToast("Something Went Wrong")

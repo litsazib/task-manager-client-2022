@@ -2,13 +2,17 @@ import {createSlice} from "@reduxjs/toolkit";
 export const summarySlice=createSlice({
     name:'summary',
     initialState:{
-        value:[]
+        value:[],
+        allUsersData:[]
     },
     reducers:{
         SetSummary:(state,action)=>{
             state.value=action.payload
+        },
+        GetAllUser:(state,action)=>{
+            state.allUsersData=action.payload
         }
     }
 })
-export  const {SetSummary}=summarySlice.actions;
+export  const {SetSummary,GetAllUser}=summarySlice.actions;
 export default  summarySlice.reducer;
