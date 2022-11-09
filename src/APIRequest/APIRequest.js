@@ -6,8 +6,8 @@ import {getToken, setEmail, setOTP, setToken, setUserDetails} from "../helper/Se
 import {SetCanceledTask, SetCompletedTask, SetNewTask, SetProgressTask} from "../redux/state-slice/task-slice";
 import {SetSummary,GetAllUser} from "../redux/state-slice/summary-slice";
 import {SetProfile} from "../redux/state-slice/profile-slice";
-// const BaseURL="https://task-manager-server-2022.herokuapp.com/api/v1/";
-const BaseURL="http://localhost:8080/api/v1";
+const BaseURL="https://task-manager-server-2022.herokuapp.com/api/v1/";
+// const BaseURL="http://localhost:8080/api/v1";
 
 const AxiosHeader={headers:{"token":getToken()}}
 export function NewTaskRequest(title,description,assigMember){
